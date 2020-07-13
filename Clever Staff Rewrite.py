@@ -61,12 +61,13 @@ class Candidate:
         self.comment = comment
 
 a2 = wb.active['A2'].value
+b2 = wb.active['B2'].value
 print(a2)
 
-FirstCanidate = Candidate(a2, "test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
+FirstCanidate = Candidate(a2, b2, "test", "test", "test", "test", "test", "test", "test", "test", "test",
                           "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
                           "test", "test", "test", "test", "test", "test", "test")
-print(FirstCanidate.number)
+print(FirstCanidate.lastname)
         
 
 # Сохраняем проделанную работу в файл
