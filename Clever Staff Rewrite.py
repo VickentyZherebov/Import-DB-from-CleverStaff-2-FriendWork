@@ -67,18 +67,55 @@ print('_________________________________________________')
 maxcolumn = 6
 while letternumber < maxcolumn:
     print(f'6. Cтартовое значение = {letternumber}')
-    a2 = wb.active[f'A{letternumber}'].value
-    b2 = wb.active[f'B{letternumber}'].value
-    c2 = wb.active[f'C{letternumber}'].value
-    d2 = wb.active[f'D{letternumber}'].value
+    a = wb.active[f'A{letternumber}'].value
+    b = wb.active[f'B{letternumber}'].value
+    c = wb.active[f'C{letternumber}'].value
+    d = wb.active[f'D{letternumber}'].value
+    e = wb.active[f'E{letternumber}'].value
+    f = wb.active[f'F{letternumber}'].value
+    g = wb.active[f'G{letternumber}'].value
+    h = wb.active[f'H{letternumber}'].value
+    i = wb.active[f'I{letternumber}'].value
+    j = wb.active[f'J{letternumber}'].value
+    k = wb.active[f'K{letternumber}'].value
+    l = wb.active[f'L{letternumber}'].value
+    m = wb.active[f'M{letternumber}'].value
+    n = wb.active[f'N{letternumber}'].value
+    o = wb.active[f'O{letternumber}'].value
+    p = wb.active[f'P{letternumber}'].value
+    q = wb.active[f'Q{letternumber}'].value
+    r = wb.active[f'R{letternumber}'].value
+    s = wb.active[f'S{letternumber}'].value
+    t = wb.active[f'T{letternumber}'].value
+    u = wb.active[f'U{letternumber}'].value
+    v = wb.active[f'V{letternumber}'].value
+    w = wb.active[f'W{letternumber}'].value
+    x = wb.active[f'X{letternumber}'].value
+    y = wb.active[f'Y{letternumber}'].value
+    z = wb.active[f'Z{letternumber}'].value
 
-    FirstCanidate = Candidate(a2, b2, c2, d2, "test", "test", "test", "test", "test", "test", "test",
-                              "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
-                              "test", "test", "test", "test", "test", "test", "test", "test")
+    FirstCanidate = Candidate(a, b, c, d, e, f, g, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w,
+                              x, y, z, "test", "test", "test", "test", "test")
     print(FirstCanidate.number)
     print(FirstCanidate.firstname)
     print(FirstCanidate.patronymic)
     print(FirstCanidate.lastname)
+    print(FirstCanidate.desiredposition)
+    print(FirstCanidate.currentplace)
+    print(FirstCanidate.birthdate)
+    print(FirstCanidate.sex)
+    print(FirstCanidate.status)
+    print(FirstCanidate.phone)
+    print(FirstCanidate.email)
+    print(FirstCanidate.skype)
+    print(FirstCanidate.facebook)
+    print(FirstCanidate.linkedin)
+    print(FirstCanidate.typeofemployment)
+    print(FirstCanidate.fieldofactivity)
+    print(FirstCanidate.workexperience)
+    print(FirstCanidate.salary)
+    print(FirstCanidate.currency)
+    print(FirstCanidate.language)
     print("____________________________________________")
     letternumber = letternumber + 1
 
