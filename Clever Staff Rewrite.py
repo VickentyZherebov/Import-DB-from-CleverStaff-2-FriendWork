@@ -24,15 +24,17 @@ print(f'4. Количество строк на странице "кандида
 NumberOfCandidates = maxcolumn - 1
 print(f'5. Количество кандидатов должно быть меньше количества строк на единицу (заголовок) и равно - {NumberOfCandidates}')
 
+
 # Создаем класс CandidateClass
 class Candidate:
-    def __init__(self, number, lastname, patronymic, desiredposition, currentplace, birthdate,
+    def __init__(self, number, firstname, patronymic, lastname, desiredposition, currentplace, birthdate,
                  sex, status, phone, email, skype, facebook, linkedin, typeofemployment, fieldofactivity,
                  workexperience, salary, currency, language, languagelevel, region, dateofadding, candidateid,
                  actiondate, actioncreator, action, commentdate, commentcreator, comment):
         self.number = number
-        self.lastname = lastname
+        self.firstname = firstname
         self.patronymic = patronymic
+        self.lastname = lastname
         self.desiredposition = desiredposition
         self.currentplace = currentplace
         self.birthdate = birthdate
@@ -60,18 +62,28 @@ class Candidate:
         self.commentcreator = commentcreator
         self.comment = comment
 
-a2 = wb.active['A2'].value
-b2 = wb.active['B2'].value
-print(a2)
+letternumber = 2
+print('_________________________________________________')
+maxcolumn = 6
+while letternumber < maxcolumn:
+    print(f'6. Cтартовое значение = {letternumber}')
+    a2 = wb.active[f'A{letternumber}'].value
+    b2 = wb.active[f'B{letternumber}'].value
+    c2 = wb.active[f'C{letternumber}'].value
+    d2 = wb.active[f'D{letternumber}'].value
 
-FirstCanidate = Candidate(a2, b2, "test", "test", "test", "test", "test", "test", "test", "test", "test",
-                          "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
-                          "test", "test", "test", "test", "test", "test", "test")
-print(FirstCanidate.lastname)
-        
+    FirstCanidate = Candidate(a2, b2, c2, d2, "test", "test", "test", "test", "test", "test", "test",
+                              "test", "test", "test", "test", "test", "test", "test", "test", "test", "test", "test",
+                              "test", "test", "test", "test", "test", "test", "test", "test")
+    print(FirstCanidate.number)
+    print(FirstCanidate.firstname)
+    print(FirstCanidate.patronymic)
+    print(FirstCanidate.lastname)
+    print("____________________________________________")
+    letternumber = letternumber + 1
 
-# Сохраняем проделанную работу в файл
-wb.save('AIHUB.xlsx')
+    # Сохраняем проделанную работу в файл
+    # wb.save('AIHUB.xlsx')
 
-# Открываем файл с помощью программы, указанной в реестре Windows для файлов этого типа
-os.startfile('AIHUB.xlsx')
+    # Открываем файл с помощью программы, указанной в реестре Windows для файлов этого типа
+    # os.startfile('AIHUB.xlsx')
