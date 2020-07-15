@@ -71,4 +71,5 @@ workbook = load_workbook('AIHUB.xlsx')
 candidates = load_candidates(workbook)
 load_history(workbook, candidates)
 
-print("\n".join(map(lambda c: c.__repr__(), candidates.values())))
+for local_id, candidate in candidates.items()[:20]:
+    print(candidate)
