@@ -66,44 +66,44 @@ class Candidate:
         self.comment = comment
 
 
-letter_number = 1
+row_number = 1
 print('_________________________________________________')
-while letter_number <= maxcolumn:
-    print(f'6. Cтартовое значение = {letter_number}')
-    number = wb.active[f'A{letter_number}'].value
-    first_name = wb.active[f'B{letter_number}'].value
-    patro_nymic = wb.active[f'C{letter_number}'].value
-    last_name = wb.active[f'D{letter_number}'].value
-    desired_position = wb.active[f'E{letter_number}'].value
-    current_position = wb.active[f'F{letter_number}'].value
-    current_place = wb.active[f'G{letter_number}'].value
-    birth_date = wb.active[f'H{letter_number}'].value
-    sex = wb.active[f'I{letter_number}'].value
-    status = wb.active[f'J{letter_number}'].value
-    phone = wb.active[f'K{letter_number}'].value
-    email = wb.active[f'L{letter_number}'].value
-    skype = wb.active[f'M{letter_number}'].value
-    facebook = wb.active[f'N{letter_number}'].value
-    linkedin = wb.active[f'O{letter_number}'].value
-    type_of_employment = wb.active[f'P{letter_number}'].value
-    field_of_activity = wb.active[f'Q{letter_number}'].value
-    work_experience = wb.active[f'R{letter_number}'].value
-    salary = wb.active[f'S{letter_number}'].value
-    currency = wb.active[f'T{letter_number}'].value
-    language = wb.active[f'U{letter_number}'].value
-    language_level = wb.active[f'U{letter_number}'].value
-    region = wb.active[f'V{letter_number}'].value
-    date_of_adding = wb.active[f'Z{letter_number}'].value
-    local_id = wb.active[f'AB{letter_number}'].value
+while row_number <= maxcolumn:
+    print(f'6. Cтартовое значение = {row_number}')
+    number = wb.active[f'A{row_number}'].value
+    first_name = wb.active[f'B{row_number}'].value
+    patro_nymic = wb.active[f'C{row_number}'].value
+    last_name = wb.active[f'D{row_number}'].value
+    desired_position = wb.active[f'E{row_number}'].value
+    current_position = wb.active[f'F{row_number}'].value
+    current_place = wb.active[f'G{row_number}'].value
+    birth_date = wb.active[f'H{row_number}'].value
+    sex = wb.active[f'I{row_number}'].value
+    status = wb.active[f'J{row_number}'].value
+    phone = wb.active[f'K{row_number}'].value
+    email = wb.active[f'L{row_number}'].value
+    skype = wb.active[f'M{row_number}'].value
+    facebook = wb.active[f'N{row_number}'].value
+    linkedin = wb.active[f'O{row_number}'].value
+    type_of_employment = wb.active[f'P{row_number}'].value
+    field_of_activity = wb.active[f'Q{row_number}'].value
+    work_experience = wb.active[f'R{row_number}'].value
+    salary = wb.active[f'S{row_number}'].value
+    currency = wb.active[f'T{row_number}'].value
+    language = wb.active[f'U{row_number}'].value
+    language_level = wb.active[f'U{row_number}'].value
+    region = wb.active[f'V{row_number}'].value
+    date_of_adding = wb.active[f'Z{row_number}'].value
+    local_id = wb.active[f'AB{row_number}'].value
     # делаем активным лист с Историей по кадидатам
 
-    wb.active = 1
-    ln = 3
-    while wb.active[f'D{ln}'].value == str(local_id):
-        print('я чет нашел')
-        print(wb.active[f'D{ln}'].value)
-        ln = ln + 1
-    wb.active = 0
+   #  wb.active = 1
+   #  ln = 3
+   # while wb.active[f'D{ln}'].value == str(local_id):
+   #     print('я чет нашел')
+   #      print(wb.active[f'D{ln}'].value)
+   #      ln = ln + 1
+   #  wb.active = 0
 
 
     #for i in range (3, 6052)
@@ -116,53 +116,24 @@ while letter_number <= maxcolumn:
     #         if cell == local_id:
     #             print(ws.cell(cell.row, 4).value)
     # wb.active = 0
-    action_date = wb.active[f'W{letter_number}'].value
-    action_creator = wb.active[f'X{letter_number}'].value
-    action = wb.active[f'Y{letter_number}'].value
-    comment_date = wb.active[f'Z{letter_number}'].value
-    comment_creator = wb.active[f'A{letter_number}'].value
-    comment = wb.active[f'B{letter_number}'].value
+    action_date = wb.active[f'W{row_number}'].value
+    action_creator = wb.active[f'X{row_number}'].value
+    action = wb.active[f'Y{row_number}'].value
+    comment_date = wb.active[f'Z{row_number}'].value
+    comment_creator = wb.active[f'A{row_number}'].value
+    comment = wb.active[f'B{row_number}'].value
     candidate = Candidate(number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
                           birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
                           field_of_activity, work_experience, salary, currency, language, language_level,
                           region, date_of_adding, local_id, action_date, action_creator, action, comment_date,
                           comment_creator, comment)
-    print(candidate.number)
-    print(candidate.first_name)
-    print(candidate.patro_nymic)
-    print(candidate.last_name)
-    print(candidate.desired_position)
-    print(candidate.current_position)
-    print(candidate.current_place)
-    print(candidate.birth_date)
-    print(candidate.sex)
-    print(candidate.status)
-    print(candidate.phone)
-    print(candidate.email)
-    print(candidate.skype)
-    print(candidate.facebook)
-    print(candidate.linkedin)
-    print(candidate.type_of_employment)
-    print(candidate.field_of_activity)
-    print(candidate.work_experience)
-    print(candidate.salary)
-    print(candidate.currency)
-    print(candidate.language)
-    print(candidate.region)
-    print(candidate.date_of_adding)
-    print(candidate.local_id)
-    print(candidate.action_date)
-    print(candidate.action_creator)
-    print(candidate.action)
-    print(candidate.comment_date)
-    print(candidate.comment_creator)
-    print(candidate.comment)
-    print("____________________________________________")
+    print(candidate.__dict__)
+
 #    for row in wb['история'].iter_rows("D"):
 #        for cell in row:
 #            if cell.value == local_id:
 #                print(wb['история'].cell(row=cell.row, column=5).value)  # change column number for any cell value
-    letter_number = letter_number + 1
+    row_number = row_number + 1
 
     # Сохраняем проделанную работу в файл
     # wb.save('AIHUB.xlsx')
