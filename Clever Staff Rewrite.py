@@ -1,3 +1,5 @@
+from typing import Dict
+
 from openpyxl import load_workbook, Workbook
 
 # загружаем эксель файл который надо пересобрать
@@ -7,7 +9,7 @@ from Action import Action
 from Candidate import Candidate
 
 
-def load_candidates(workbook: Workbook):
+def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
     candidates_sheet: Worksheet = workbook['кандидаты']
 
     # Узнаем количество заполненных строк на странице "кандидаты",
@@ -47,7 +49,7 @@ def load_candidates(workbook: Workbook):
     return candidates
 
 
-def load_history(workbook: Workbook, candidates: dict):
+def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
     history_sheet: Worksheet = workbook['история']
 
     current_candidate = None
@@ -69,4 +71,4 @@ workbook = load_workbook('AIHUB.xlsx')
 candidates = load_candidates(workbook)
 load_history(workbook, candidates)
 
-print(candidates.items())
+print("\n".join(map(lambda c: c.__repr__(), candidates.values())))
