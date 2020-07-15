@@ -1,4 +1,5 @@
 from openpyxl import load_workbook
+from openpyxl.utils import get_column_letter, column_index_from_string
 
 # загружаем эксель файл который надо пересобрать
 wb = load_workbook('AIHUB.xlsx')
@@ -21,23 +22,25 @@ print(f'3. Делаем активным лист с номером 0 и выв�
 # вычетаем строку с заголовком и получаем количество кандидатов
 maxcolumn = wb['кандидаты'].max_row
 print(f'4. Количество строк на странице "кандидаты" равно - {maxcolumn}')
-NumberOfCandidates = maxcolumn - 1
-print(f'5. Количество кандидатов должно быть меньше количества строк на единицу (заголовок) и равно - {NumberOfCandidates}')
+number_of_candidates = maxcolumn - 1
+print(f'5. Количество кандидатов должно быть меньше количества строк на единицу (заголовок) и равно - '
+      f'{number_of_candidates}')
 
 
-# Создаем класс CandidateClass
+# Вызываем Candidate Class
 class Candidate:
-    def __init__(self, number, firstname, patronymic, lastname, desiredposition, currentplace, birthdate,
-                 sex, status, phone, email, skype, facebook, linkedin, typeofemployment, fieldofactivity,
-                 workexperience, salary, currency, language, languagelevel, region, dateofadding, candidateid,
-                 actiondate, actioncreator, action, commentdate, commentcreator, comment):
+    def __init__(self, number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
+                 birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
+                 field_of_activity, work_experience, salary, currency, language, language_level, region, date_of_adding,
+                 local_id, action_date, action_creator, action, comment_date, comment_creator, comment):
         self.number = number
-        self.firstname = firstname
-        self.patronymic = patronymic
-        self.lastname = lastname
-        self.desiredposition = desiredposition
-        self.currentplace = currentplace
-        self.birthdate = birthdate
+        self.first_name = first_name
+        self.patro_nymic = patro_nymic
+        self.last_name = last_name
+        self.desired_position = desired_position
+        self.current_position = current_position
+        self.current_place = current_place
+        self.birth_date = birth_date
         self.sex = sex
         self.status = status
         self.phone = phone
@@ -45,79 +48,121 @@ class Candidate:
         self.skype = skype
         self.facebook = facebook
         self.linkedin = linkedin
-        self.typeofemployment = typeofemployment
-        self.fieldofactivity = fieldofactivity
-        self.workexperience = workexperience
+        self.type_of_employment = type_of_employment
+        self.field_of_activity = field_of_activity
+        self.work_experience = work_experience
         self.salary = salary
         self.currency = currency
         self.language = language
-        self.languagelevel = languagelevel
+        self.language_level = language_level
         self.region = region
-        self.dateofadding = dateofadding
-        self.candidateid = candidateid
-        self.actiondate = actiondate
-        self.actioncreator = actioncreator
+        self.date_of_adding = date_of_adding
+        self.local_id = local_id
+        self.action_date = action_date
+        self.action_creator = action_creator
         self.action = action
-        self.commentdate = commentdate
-        self.commentcreator = commentcreator
+        self.comment_date = comment_date
+        self.comment_creator = comment_creator
         self.comment = comment
 
-letternumber = 2
-print('_________________________________________________')
-maxcolumn = 6
-while letternumber < maxcolumn:
-    print(f'6. Cтартовое значение = {letternumber}')
-    a = wb.active[f'A{letternumber}'].value
-    b = wb.active[f'B{letternumber}'].value
-    c = wb.active[f'C{letternumber}'].value
-    d = wb.active[f'D{letternumber}'].value
-    e = wb.active[f'E{letternumber}'].value
-    f = wb.active[f'F{letternumber}'].value
-    g = wb.active[f'G{letternumber}'].value
-    h = wb.active[f'H{letternumber}'].value
-    i = wb.active[f'I{letternumber}'].value
-    j = wb.active[f'J{letternumber}'].value
-    k = wb.active[f'K{letternumber}'].value
-    l = wb.active[f'L{letternumber}'].value
-    m = wb.active[f'M{letternumber}'].value
-    n = wb.active[f'N{letternumber}'].value
-    o = wb.active[f'O{letternumber}'].value
-    p = wb.active[f'P{letternumber}'].value
-    q = wb.active[f'Q{letternumber}'].value
-    r = wb.active[f'R{letternumber}'].value
-    s = wb.active[f'S{letternumber}'].value
-    t = wb.active[f'T{letternumber}'].value
-    u = wb.active[f'U{letternumber}'].value
-    v = wb.active[f'V{letternumber}'].value
-    w = wb.active[f'W{letternumber}'].value
-    x = wb.active[f'X{letternumber}'].value
-    y = wb.active[f'Y{letternumber}'].value
-    z = wb.active[f'Z{letternumber}'].value
 
-    FirstCanidate = Candidate(a, b, c, d, e, f, g, i, j, k, l, m, n, o, p, q, r, s, t, u, v, w,
-                              x, y, z, "test", "test", "test", "test", "test")
-    print(FirstCanidate.number)
-    print(FirstCanidate.firstname)
-    print(FirstCanidate.patronymic)
-    print(FirstCanidate.lastname)
-    print(FirstCanidate.desiredposition)
-    print(FirstCanidate.currentplace)
-    print(FirstCanidate.birthdate)
-    print(FirstCanidate.sex)
-    print(FirstCanidate.status)
-    print(FirstCanidate.phone)
-    print(FirstCanidate.email)
-    print(FirstCanidate.skype)
-    print(FirstCanidate.facebook)
-    print(FirstCanidate.linkedin)
-    print(FirstCanidate.typeofemployment)
-    print(FirstCanidate.fieldofactivity)
-    print(FirstCanidate.workexperience)
-    print(FirstCanidate.salary)
-    print(FirstCanidate.currency)
-    print(FirstCanidate.language)
+letter_number = 1
+print('_________________________________________________')
+while letter_number <= maxcolumn:
+    print(f'6. Cтартовое значение = {letter_number}')
+    number = wb.active[f'A{letter_number}'].value
+    first_name = wb.active[f'B{letter_number}'].value
+    patro_nymic = wb.active[f'C{letter_number}'].value
+    last_name = wb.active[f'D{letter_number}'].value
+    desired_position = wb.active[f'E{letter_number}'].value
+    current_position = wb.active[f'F{letter_number}'].value
+    current_place = wb.active[f'G{letter_number}'].value
+    birth_date = wb.active[f'H{letter_number}'].value
+    sex = wb.active[f'I{letter_number}'].value
+    status = wb.active[f'J{letter_number}'].value
+    phone = wb.active[f'K{letter_number}'].value
+    email = wb.active[f'L{letter_number}'].value
+    skype = wb.active[f'M{letter_number}'].value
+    facebook = wb.active[f'N{letter_number}'].value
+    linkedin = wb.active[f'O{letter_number}'].value
+    type_of_employment = wb.active[f'P{letter_number}'].value
+    field_of_activity = wb.active[f'Q{letter_number}'].value
+    work_experience = wb.active[f'R{letter_number}'].value
+    salary = wb.active[f'S{letter_number}'].value
+    currency = wb.active[f'T{letter_number}'].value
+    language = wb.active[f'U{letter_number}'].value
+    language_level = wb.active[f'U{letter_number}'].value
+    region = wb.active[f'V{letter_number}'].value
+    date_of_adding = wb.active[f'Z{letter_number}'].value
+    local_id = wb.active[f'AB{letter_number}'].value
+    # делаем активным лист с Историей по кадидатам
+
+    wb.active = 1
+    ln = 3
+    while wb.active[f'D{ln}'].value == str(local_id):
+        print('я чет нашел')
+        print(wb.active[f'D{ln}'].value)
+        ln = ln + 1
+    wb.active = 0
+
+
+    #for i in range (3, 6052)
+    #    in
+
+
+    # ws = wb.active
+    # for row in ws.iter_rows(2, 6052, 4, 4, "D"):
+    #     for cell in row:
+    #         if cell == local_id:
+    #             print(ws.cell(cell.row, 4).value)
+    # wb.active = 0
+    action_date = wb.active[f'W{letter_number}'].value
+    action_creator = wb.active[f'X{letter_number}'].value
+    action = wb.active[f'Y{letter_number}'].value
+    comment_date = wb.active[f'Z{letter_number}'].value
+    comment_creator = wb.active[f'A{letter_number}'].value
+    comment = wb.active[f'B{letter_number}'].value
+    candidate = Candidate(number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
+                          birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
+                          field_of_activity, work_experience, salary, currency, language, language_level,
+                          region, date_of_adding, local_id, action_date, action_creator, action, comment_date,
+                          comment_creator, comment)
+    print(candidate.number)
+    print(candidate.first_name)
+    print(candidate.patro_nymic)
+    print(candidate.last_name)
+    print(candidate.desired_position)
+    print(candidate.current_position)
+    print(candidate.current_place)
+    print(candidate.birth_date)
+    print(candidate.sex)
+    print(candidate.status)
+    print(candidate.phone)
+    print(candidate.email)
+    print(candidate.skype)
+    print(candidate.facebook)
+    print(candidate.linkedin)
+    print(candidate.type_of_employment)
+    print(candidate.field_of_activity)
+    print(candidate.work_experience)
+    print(candidate.salary)
+    print(candidate.currency)
+    print(candidate.language)
+    print(candidate.region)
+    print(candidate.date_of_adding)
+    print(candidate.local_id)
+    print(candidate.action_date)
+    print(candidate.action_creator)
+    print(candidate.action)
+    print(candidate.comment_date)
+    print(candidate.comment_creator)
+    print(candidate.comment)
     print("____________________________________________")
-    letternumber = letternumber + 1
+#    for row in wb['история'].iter_rows("D"):
+#        for cell in row:
+#            if cell.value == local_id:
+#                print(wb['история'].cell(row=cell.row, column=5).value)  # change column number for any cell value
+    letter_number = letter_number + 1
 
     # Сохраняем проделанную работу в файл
     # wb.save('AIHUB.xlsx')
