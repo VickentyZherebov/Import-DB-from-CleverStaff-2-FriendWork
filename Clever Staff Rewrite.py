@@ -1,142 +1,60 @@
 from openpyxl import load_workbook
-from openpyxl.utils import get_column_letter, column_index_from_string
 
 # загружаем эксель файл который надо пересобрать
-wb = load_workbook('AIHUB.xlsx')
-
-# Загружаем модуль OS - он поможет открывать Excel файл в конце работы программы с помощью (os.startfile('AIHUB.xlsx'))
-import os
-
-# Запоминаем и выводим названия листов
-sn = wb.sheetnames
-print(f'1. В документе есть следующие листы -{sn}')
-
-# Выводим название активного листа
-print(f'2. Активный лист на данный момент -"{wb.active.title}"')
-
-# Делаем активным лист с номером 0 и выводим его название
-wb.active = 0
-print(f'3. Делаем активным лист с номером 0 и выводим его название - "{wb.active.title}"')
-
-# Узнаем количество заполненных строк на странице "кандидаты",
-# вычетаем строку с заголовком и получаем количество кандидатов
-maxcolumn = wb['кандидаты'].max_row
-print(f'4. Количество строк на странице "кандидаты" равно - {maxcolumn}')
-number_of_candidates = maxcolumn - 1
-print(f'5. Количество кандидатов должно быть меньше количества строк на единицу (заголовок) и равно - '
-      f'{number_of_candidates}')
+from Candidate import Candidate
 
 
-# Вызываем Candidate Class
-class Candidate:
-    def __init__(self, number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
-                 birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
-                 field_of_activity, work_experience, salary, currency, language, language_level, region, date_of_adding,
-                 local_id, action_date, action_creator, action, comment_date, comment_creator, comment):
-        self.number = number
-        self.first_name = first_name
-        self.patro_nymic = patro_nymic
-        self.last_name = last_name
-        self.desired_position = desired_position
-        self.current_position = current_position
-        self.current_place = current_place
-        self.birth_date = birth_date
-        self.sex = sex
-        self.status = status
-        self.phone = phone
-        self.email = email
-        self.skype = skype
-        self.facebook = facebook
-        self.linkedin = linkedin
-        self.type_of_employment = type_of_employment
-        self.field_of_activity = field_of_activity
-        self.work_experience = work_experience
-        self.salary = salary
-        self.currency = currency
-        self.language = language
-        self.language_level = language_level
-        self.region = region
-        self.date_of_adding = date_of_adding
-        self.local_id = local_id
-        self.action_date = action_date
-        self.action_creator = action_creator
-        self.action = action
-        self.comment_date = comment_date
-        self.comment_creator = comment_creator
-        self.comment = comment
+def load_candidates(excel_filename):
+    wb = load_workbook(excel_filename)
+    candidates_sheet = wb['кандидаты']
+
+    # Узнаем количество заполненных строк на странице "кандидаты",
+    # вычетаем строку с заголовком и получаем количество кандидатов
+    number_of_candidates = candidates_sheet.max_row - 1
+    print(f'Количество кандидатов должно быть меньше количества строк на единицу (заголовок) и равно - {number_of_candidates}')
+
+    candidates = {}
+    for row_number in range(2, number_of_candidates + 1):
+        number = wb.active[f'A{row_number}'].value
+        first_name = wb.active[f'B{row_number}'].value
+        patro_nymic = wb.active[f'C{row_number}'].value
+        last_name = wb.active[f'D{row_number}'].value
+        desired_position = wb.active[f'E{row_number}'].value
+        current_position = wb.active[f'F{row_number}'].value
+        current_place = wb.active[f'G{row_number}'].value
+        birth_date = wb.active[f'H{row_number}'].value
+        sex = wb.active[f'I{row_number}'].value
+        status = wb.active[f'J{row_number}'].value
+        phone = wb.active[f'K{row_number}'].value
+        email = wb.active[f'L{row_number}'].value
+        skype = wb.active[f'M{row_number}'].value
+        facebook = wb.active[f'N{row_number}'].value
+        linkedin = wb.active[f'O{row_number}'].value
+        type_of_employment = wb.active[f'P{row_number}'].value
+        field_of_activity = wb.active[f'Q{row_number}'].value
+        work_experience = wb.active[f'R{row_number}'].value
+        salary = wb.active[f'S{row_number}'].value
+        currency = wb.active[f'T{row_number}'].value
+        language = wb.active[f'U{row_number}'].value
+        language_level = wb.active[f'U{row_number}'].value
+        region = wb.active[f'V{row_number}'].value
+        date_of_adding = wb.active[f'Z{row_number}'].value
+        local_id = wb.active[f'AB{row_number}'].value
+        action_date = wb.active[f'W{row_number}'].value
+        action_creator = wb.active[f'X{row_number}'].value
+        action = wb.active[f'Y{row_number}'].value
+        comment_date = wb.active[f'Z{row_number}'].value
+        comment_creator = wb.active[f'A{row_number}'].value
+        comment = wb.active[f'B{row_number}'].value
+        candidates[local_id] = Candidate(
+            number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
+            birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
+            field_of_activity, work_experience, salary, currency, language, language_level,
+            region, date_of_adding, local_id, action_date, action_creator, action, comment_date,
+            comment_creator, comment)
+
+    return candidates
 
 
-row_number = 1
-print('_________________________________________________')
-while row_number <= maxcolumn:
-    print(f'6. Cтартовое значение = {row_number}')
-    number = wb.active[f'A{row_number}'].value
-    first_name = wb.active[f'B{row_number}'].value
-    patro_nymic = wb.active[f'C{row_number}'].value
-    last_name = wb.active[f'D{row_number}'].value
-    desired_position = wb.active[f'E{row_number}'].value
-    current_position = wb.active[f'F{row_number}'].value
-    current_place = wb.active[f'G{row_number}'].value
-    birth_date = wb.active[f'H{row_number}'].value
-    sex = wb.active[f'I{row_number}'].value
-    status = wb.active[f'J{row_number}'].value
-    phone = wb.active[f'K{row_number}'].value
-    email = wb.active[f'L{row_number}'].value
-    skype = wb.active[f'M{row_number}'].value
-    facebook = wb.active[f'N{row_number}'].value
-    linkedin = wb.active[f'O{row_number}'].value
-    type_of_employment = wb.active[f'P{row_number}'].value
-    field_of_activity = wb.active[f'Q{row_number}'].value
-    work_experience = wb.active[f'R{row_number}'].value
-    salary = wb.active[f'S{row_number}'].value
-    currency = wb.active[f'T{row_number}'].value
-    language = wb.active[f'U{row_number}'].value
-    language_level = wb.active[f'U{row_number}'].value
-    region = wb.active[f'V{row_number}'].value
-    date_of_adding = wb.active[f'Z{row_number}'].value
-    local_id = wb.active[f'AB{row_number}'].value
-    # делаем активным лист с Историей по кадидатам
-
-   #  wb.active = 1
-   #  ln = 3
-   # while wb.active[f'D{ln}'].value == str(local_id):
-   #     print('я чет нашел')
-   #      print(wb.active[f'D{ln}'].value)
-   #      ln = ln + 1
-   #  wb.active = 0
-
-
-    #for i in range (3, 6052)
-    #    in
-
-
-    # ws = wb.active
-    # for row in ws.iter_rows(2, 6052, 4, 4, "D"):
-    #     for cell in row:
-    #         if cell == local_id:
-    #             print(ws.cell(cell.row, 4).value)
-    # wb.active = 0
-    action_date = wb.active[f'W{row_number}'].value
-    action_creator = wb.active[f'X{row_number}'].value
-    action = wb.active[f'Y{row_number}'].value
-    comment_date = wb.active[f'Z{row_number}'].value
-    comment_creator = wb.active[f'A{row_number}'].value
-    comment = wb.active[f'B{row_number}'].value
-    candidate = Candidate(number, first_name, patro_nymic, last_name, desired_position, current_position, current_place,
-                          birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
-                          field_of_activity, work_experience, salary, currency, language, language_level,
-                          region, date_of_adding, local_id, action_date, action_creator, action, comment_date,
-                          comment_creator, comment)
-    print(candidate.__dict__)
-
-#    for row in wb['история'].iter_rows("D"):
-#        for cell in row:
-#            if cell.value == local_id:
-#                print(wb['история'].cell(row=cell.row, column=5).value)  # change column number for any cell value
-    row_number = row_number + 1
-
-    # Сохраняем проделанную работу в файл
-    # wb.save('AIHUB.xlsx')
-
-    # Открываем файл с помощью программы, указанной в реестре Windows для файлов этого типа
-    # os.startfile('AIHUB.xlsx')
+candidates = load_candidates('AIHUB.xlsx')
+print(candidates)
