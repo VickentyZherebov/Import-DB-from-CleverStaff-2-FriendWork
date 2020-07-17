@@ -1,4 +1,4 @@
-from typing import Dict
+from typing import Dict #
 
 from openpyxl import load_workbook, Workbook
 
@@ -8,7 +8,7 @@ from openpyxl.worksheet.worksheet import Worksheet
 from Action import Action
 from Candidate import Candidate
 
-
+# Не понимаю, что тут происходит - 12 и 13 строка. Что значит "->"? Просто затупил
 def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
     candidates_sheet: Worksheet = workbook['кандидаты']
 
@@ -16,6 +16,10 @@ def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
     # вычетаем строку с заголовком и получаем количество кандидатов
     print(f'Количество кандидатов {candidates_sheet.max_row - 1}')
 
+#  Создаем словарь "candidates" где ключом будет значение переменной в диапазоне от 2 до максимального количества
+#     строк, а значением будет переменная candidates[local_id] в которую мы засовываем класс Candidate значения которого
+#     заполняются значение при переборе значение переменной row_number, в конце мы делаем return candidates - то есть
+#     записываем ключ-значение в словарь и бежим по новой до предела
     candidates = {}
     for row_number in range(2, candidates_sheet.max_row + 1):
         local_id = candidates_sheet[f'AB{row_number}'].value
@@ -49,14 +53,15 @@ def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
     return candidates
 
 
-def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
+def load_history(workbook: Workbook, candidates: Dict[str, Candidate]): # так же не понятно, что тут происходит
     history_sheet: Worksheet = workbook['история']
 
-    current_candidate = None
-    for row_number in range(3, history_sheet.max_row):
+    current_candidate = None # зачем None?
+    for row_number in range(3, history_sheet.max_row): # здесь понятно, что происходит так же как и с кандидатами -
+        # 24 строка
         local_id = history_sheet[f'D{row_number}'].value
 
-        if local_id:
+        if local_id: # тут условие мне тоже не ясно. Не понятна фраза "if local_id:" - если local_id что?)
             current_candidate = candidates[local_id]
 
         if current_candidate:
@@ -64,12 +69,23 @@ def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
                 when=history_sheet[f'E{row_number}'].value,
                 who=history_sheet[f'F{row_number}'].value,
                 action=history_sheet[f'G{row_number}'].value
-            ))
+            )) # непонятно, как должно происходить смещение вниз по пустым полям
 
 
 workbook = load_workbook('AIHUB.xlsx')
 candidates = load_candidates(workbook)
 load_history(workbook, candidates)
 
-for local_id, candidate in candidates.items()[:20]:
+# Выдает ошибку
+# for local_id, candidate in candidates.items()[:20]:
+#     Traceback(most
+#     recent
+#     call
+#     last):
+#     File
+#     "C:/PyProgects/Clever Staff Rewrite.py", line
+#     79, in < module >
+#     for local_id, candidate in candidates.items()[:20]:
+# TypeError: 'dict_items'
+# object is not subscriptable
     print(candidate)
