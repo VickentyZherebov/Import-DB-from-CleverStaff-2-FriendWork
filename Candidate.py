@@ -1,6 +1,8 @@
+import re
+
 class Candidate:
     def __init__(self, number, first_name, patronymic, last_name, desired_position, current_position, current_place,
-                 birth_date, sex, status, phone, email, skype, facebook, linkedin, type_of_employment,
+                 birth_date, sex, status, phone: str, email, skype, facebook, linkedin, type_of_employment,
                  field_of_activity, work_experience, salary, currency, language, region, date_of_adding,
                  local_id):
         self.number = number
@@ -13,7 +15,12 @@ class Candidate:
         self.birth_date = birth_date
         self.sex = sex
         self.status = status
-        self.phone = phone
+        self.phone_comment = None
+        self.phone = None
+        if phone is not None and re.fullmatch("\\d+", phone):
+            self.phone = phone
+        else:
+            self.phone_comment = phone
         self.email = email
         self.skype = skype
         self.facebook = facebook
