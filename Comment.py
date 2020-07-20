@@ -1,4 +1,4 @@
-class Action:
+class Comment:
     def __init__(self, who, when, action):
         self.who = who
         self.when = when

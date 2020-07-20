@@ -1,5 +1,6 @@
 import re
 
+
 class Candidate:
     def __init__(self, number, first_name, patronymic, last_name, desired_position, current_position, current_place,
                  birth_date, sex, status, phone: str, email, skype, facebook, linkedin, type_of_employment,

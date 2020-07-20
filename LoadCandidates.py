@@ -1,13 +1,15 @@
 from typing import Dict
-
-from openpyxl import Workbook
+from openpyxl import load_workbook
 from openpyxl.worksheet.worksheet import Worksheet
-
 from Action import Action
 from Candidate import Candidate
+from Comment import Comment
+
+wb = load_workbook('AIHUB.xlsx')
+print(wb.active.title)
 
 
-def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
+def load_candidates(workbook: wb) -> Dict[str, Candidate]:
     candidates_sheet: Worksheet = workbook['кандидаты']
 
     # Узнаем количество заполненных строк на странице "кандидаты",
@@ -47,8 +49,8 @@ def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
     return candidates
 
 
-def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
-    history_sheet: Worksheet = workbook['история']
+def load_history(workbook: wb, candidates: Dict[str, Candidate]):
+    history_sheet: Worksheet = wb['история']
 
     current_candidate = None
     for row_number in range(3, history_sheet.max_row + 1):
@@ -59,6 +61,24 @@ def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
 
         if current_candidate is not None:
             current_candidate.actions.append(Action(
+                when=history_sheet[f'E{row_number}'].value,
+                who=history_sheet[f'F{row_number}'].value,
+                action=history_sheet[f'G{row_number}'].value
+            ))
+
+
+def load_comments(workbook: wb, candidates: Dict[str, Candidate]):
+    history_sheet: Worksheet = workbook['комментарии']
+
+    current_candidate = None
+    for row_number in range(2, history_sheet.max_row + 1):
+        local_id = history_sheet[f'D{row_number}'].value
+
+        if local_id is not None:
+            current_candidate = candidates[local_id]
+
+        if current_candidate is not None:
+            current_candidate.actions.append(Comment(
                 when=history_sheet[f'E{row_number}'].value,
                 who=history_sheet[f'F{row_number}'].value,
                 action=history_sheet[f'G{row_number}'].value
