@@ -36,6 +36,7 @@ class Candidate:
         self.date_of_adding = date_of_adding
         self.local_id = local_id
         self.actions = []
+        self.comments = []
 
     def __repr__(self) -> str:
         return self.__dict__.__repr__()

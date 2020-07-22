@@ -1,20 +1,19 @@
 from typing import Dict
-from openpyxl import load_workbook
+
+from openpyxl.workbook.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
+
 from Action import Action
 from Candidate import Candidate
 from Comment import Comment
 
-wb = load_workbook('AIHUB.xlsx')
-print(wb.active.title)
 
+def load_candidates(workbook: Workbook) -> Dict[str, Candidate]:
+    candidates_sheet: Worksheet = workbook['кандидаты']
 
-def load_candidates(wb) -> Dict[str, Candidate]:
-    candidates_sheet: Worksheet = wb['кандидаты']
-
-    candidates = {}
+    candidates: Dict[str, Candidate] = {}
     for row_number in range(2, candidates_sheet.max_row + 1):
-        local_id = candidates_sheet[f'AB{row_number}'].value
+        local_id: str = candidates_sheet[f'AB{row_number}'].value
         candidates[local_id] = Candidate(
             number=candidates_sheet[f'A{row_number}'].value,
             first_name=candidates_sheet[f'B{row_number}'].value,
@@ -45,10 +44,10 @@ def load_candidates(wb) -> Dict[str, Candidate]:
     return candidates
 
 
-def load_history(wb, candidates: Dict[str, Candidate]):
-    history_sheet: Worksheet = wb['история']
+def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
+    history_sheet: Worksheet = workbook['история']
 
-    current_candidate = None
+    current_candidate: [Candidate] = None
     for row_number in range(3, history_sheet.max_row + 1):
         local_id = history_sheet[f'D{row_number}'].value
 
@@ -63,23 +62,19 @@ def load_history(wb, candidates: Dict[str, Candidate]):
             ))
 
 
-def load_comments(wb, candidates: Dict[str, Candidate]):
-    history_sheet: Worksheet = wb['комментарии']
+def load_comments(workbook: Workbook, candidates: Dict[str, Candidate]):
+    comment_sheet: Worksheet = workbook['комментарии']
 
-    current_candidate = None
-    for row_number in range(2, history_sheet.max_row + 1):
-        local_id = history_sheet[f'D{row_number}'].value
+    current_candidate: [Candidate] = None
+    for row_number in range(2, comment_sheet.max_row + 1):
+        local_id = comment_sheet[f'D{row_number}'].value
 
         if local_id is not None:
             current_candidate = candidates[local_id]
 
         if current_candidate is not None:
-            current_candidate.actions.append(Comment(
-                when=history_sheet[f'E{row_number}'].value,
-                who=history_sheet[f'F{row_number}'].value,
-                action=history_sheet[f'G{row_number}'].value
+            current_candidate.comments.append(Comment(
+                when=comment_sheet[f'E{row_number}'].value,
+                who=comment_sheet[f'F{row_number}'].value,
+                text=comment_sheet[f'G{row_number}'].value
             ))
-
-print(load_candidates(wb))
-
-
