@@ -9,12 +9,8 @@ wb = load_workbook('AIHUB.xlsx')
 print(wb.active.title)
 
 
-def load_candidates(workbook: wb) -> Dict[str, Candidate]:
-    candidates_sheet: Worksheet = workbook['кандидаты']
-
-    # Узнаем количество заполненных строк на странице "кандидаты",
-    # вычетаем строку с заголовком и получаем количество кандидатов
-    print(f'Количество кандидатов {candidates_sheet.max_row - 1}')
+def load_candidates(wb) -> Dict[str, Candidate]:
+    candidates_sheet: Worksheet = wb['кандидаты']
 
     candidates = {}
     for row_number in range(2, candidates_sheet.max_row + 1):
@@ -49,7 +45,7 @@ def load_candidates(workbook: wb) -> Dict[str, Candidate]:
     return candidates
 
 
-def load_history(workbook: wb, candidates: Dict[str, Candidate]):
+def load_history(wb, candidates: Dict[str, Candidate]):
     history_sheet: Worksheet = wb['история']
 
     current_candidate = None
@@ -67,8 +63,8 @@ def load_history(workbook: wb, candidates: Dict[str, Candidate]):
             ))
 
 
-def load_comments(workbook: wb, candidates: Dict[str, Candidate]):
-    history_sheet: Worksheet = workbook['комментарии']
+def load_comments(wb, candidates: Dict[str, Candidate]):
+    history_sheet: Worksheet = wb['комментарии']
 
     current_candidate = None
     for row_number in range(2, history_sheet.max_row + 1):
@@ -83,3 +79,7 @@ def load_comments(workbook: wb, candidates: Dict[str, Candidate]):
                 who=history_sheet[f'F{row_number}'].value,
                 action=history_sheet[f'G{row_number}'].value
             ))
+
+print(load_candidates(wb))
+
+
