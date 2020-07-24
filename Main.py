@@ -1,6 +1,6 @@
 from openpyxl import load_workbook, Workbook
 from openpyxl.writer.excel import save_workbook
-
+import os
 from ExportCandidates import export_candidates
 from LoadCandidates import load_candidates, load_history, load_comments
 
@@ -13,5 +13,7 @@ result_workbook = Workbook()
 export_candidates(result_workbook, candidates)
 save_workbook(result_workbook, "output.xlsx")
 
-# for local_id, candidate in list(candidates.items())[:20]:
-#     print(candidate)
+for local_id, candidate in list(candidates.items())[:100]:
+    print(candidate.status)
+
+os.system("output.xlsx")
