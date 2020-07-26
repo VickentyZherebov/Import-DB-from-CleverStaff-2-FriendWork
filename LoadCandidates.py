@@ -58,7 +58,7 @@ def load_history(workbook: Workbook, candidates: Dict[str, Candidate]):
             current_candidate.actions.append(Action(
                 when=history_sheet[f'E{row_number}'].value,
                 who=history_sheet[f'F{row_number}'].value,
-                action=history_sheet[f'G{row_number}'].value
+                action=history_sheet[f'G{row_number}'].value,
             ))
 
 

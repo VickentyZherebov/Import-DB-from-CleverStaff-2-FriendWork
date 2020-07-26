@@ -42,7 +42,12 @@ class Candidate:
             self.phone = phone
         else:
             self.phone_comment = phone
-        self.email = email
+        self.email_comment = None
+        self.email = None
+        if email is not None and re.search("\s", email):
+            self.email_comment = email
+        else:
+            self.email = email
         self.skype = skype
         self.facebook = facebook
         self.linkedin_is_link = None
