@@ -13,29 +13,26 @@ class Candidate:
         self.desired_position = desired_position
         self.current_position = current_position
         self.current_place = current_place
-        self.birth_date = None
-        if birth_date is not None:
-            year = birth_date[0:4]
-            month = birth_date[5:7]
-            day = birth_date[8:10]
-            self.birth_date = day + '.' + month + '.' + year
+        self.birth_date = self._reformat_date(birth_date)
         self.sex = sex
-        self.status = None
-        if status == "Активный поиск":
-            status = "Активный поиск"
-            self.status = status
-        if status == "Нанят":
-            status = "Активный поиск"
-            self.status = status
-        if status == "Наш сотрудник":
-            status = "Активный поиск"
-            self.status = status
-        if status == "Не заинтересован":
-            status = "Активный поиск"
-            self.status = status
-        if status == "Пассивный поиск":
-            status = "Отклик"
-            self.status = status
+
+        head_hunt_states = [
+            "Активный поиск",
+            "Нанят",
+            "Наш сотрудник",
+            "Не заинтересован"
+        ]
+        self_response = [
+            "Пассивный поиск"
+        ]
+
+        if status in head_hunt_states:
+            self.status = "Активный поиск"
+        elif status in self_response:
+            self.status = "Отклик"
+        else:
+            self.status = None
+
         self.phone_comment = None
         self.phone = None
         if phone is not None and re.fullmatch("\\d+", phone):
@@ -62,15 +59,21 @@ class Candidate:
         self.currency = currency
         self.language = language
         self.region = region
-        self.date_of_adding = None
-        if date_of_adding is not None:
-            year = date_of_adding[0:4]
-            month = date_of_adding[5:7]
-            day = date_of_adding[8:10]
-            self.date_of_adding = day + '.' + month + '.' + year
+        self.date_of_adding = self._reformat_date(date_of_adding)
         self.local_id = local_id
         self.actions = []
         self.comments = []
+
+    def _reformat_date(self, external_date: [str]) -> [str]:
+        if external_date is not None:
+            match = re.fullmatch("(\\d{4})-(\\d{2})-(\\d{2})")
+            if match:
+                year = match.group(1)
+                month = match.group(2)
+                day = match.group(3)
+                return f'{day}.{month}.{year}'
+
+        return None
 
     def __repr__(self) -> str:
         return self.__dict__.__repr__()
