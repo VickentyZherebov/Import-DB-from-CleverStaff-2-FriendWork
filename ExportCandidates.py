@@ -5,6 +5,11 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 from Candidate import Candidate
 
+class ExportColumn:
+    def __init__(self, name: str, index: int):
+        self.name = name
+        self.index = index
+
 
 def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
     worksheet: Worksheet = workbook.create_sheet("результат")
