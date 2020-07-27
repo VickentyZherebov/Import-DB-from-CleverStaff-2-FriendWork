@@ -66,3 +66,19 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
         # через увеличение значения переменной
 
         out_row = out_row + 1
+
+
+def count_max_comments(candidates: Dict[str, Candidate]) -> int:
+    max_comments = 0
+    for candidate in candidates.values():
+        candidate_comments = len(candidate.comments) + len(candidate.actions)
+        if max_comments < candidate_comments:
+            max_comments = candidate_comments
+    return max_comments
+
+
+
+
+
+
+

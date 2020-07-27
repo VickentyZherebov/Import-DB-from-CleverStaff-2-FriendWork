@@ -66,7 +66,7 @@ class Candidate:
 
     def _reformat_date(self, external_date: [str]) -> [str]:
         if external_date is not None:
-            match = re.fullmatch("(\\d{4})-(\\d{2})-(\\d{2})")
+            match = re.fullmatch("(\\d{4})-(\\d{2})-(\\d{2})", external_date)
             if match:
                 year = match.group(1)
                 month = match.group(2)
