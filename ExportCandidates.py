@@ -7,9 +7,9 @@ from Candidate import Candidate
 
 
 class ExportColumn:
-    def __init__(self, name: str, value: Callable[[Candidate], str]):
+    def __init__(self, name: str, get_value: Callable[[Candidate], str]):
         self.name = name
-        self.value = value
+        self.get_value = get_value
 
 
 _columns = [
@@ -65,7 +65,7 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
             worksheet.cell(
                 row=out_row,
                 column=column_index + 1,
-                value=_columns[column_index].value(candidate)
+                value=_columns[column_index].get_value(candidate)
             )
         comment_index = 0
         for comment in candidate.comments:
