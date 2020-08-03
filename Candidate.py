@@ -3,7 +3,7 @@ import re
 
 class Candidate:
     def __init__(self, number, first_name, patronymic, last_name, desired_position, current_position, current_place,
-                 birth_date, sex, status, phone: str, email, skype, facebook, linkedin: str, type_of_employment,
+                 birth_date, sex, status, phone: str, email: str, skype, facebook, linkedin: str, type_of_employment,
                  field_of_activity, work_experience, salary, currency, language, region, date_of_adding,
                  local_id):
         self.number = number
@@ -37,14 +37,19 @@ class Candidate:
         self.phone = None
         if phone is not None and re.fullmatch("\\d+", phone):
             self.phone = phone
-        else:
-            self.phone_comment = phone
+        elif phone is not None:
+            self.phone = phone.split(', ', 1)[0]
+            self.phone_comment = phone.split(', ', 1)[1]
         self.email_comment = None
         self.email = None
-        if email is not None and re.search("\s", email):
-            self.email_comment = email
+        if email is not None and re.fullmatch("(^|\s)[-a-z0-9_.]+@([-a-z0-9]+\.)+[a-z]{2,6}(\s|$)", email):
+            self.email = email
+        elif email is not None:
+            self.email = email.split(', ', 1)[0]
+            self.email_comment = email.split(', ', 1)[1]
         else:
             self.email = email
+            self.email_comment = 'нет email'
         self.skype = skype
         self.facebook = facebook
         self.linkedin_is_link = None

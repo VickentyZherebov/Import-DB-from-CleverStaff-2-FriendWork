@@ -72,14 +72,14 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
             worksheet.cell(
                 row=out_row,
                 column=columns_count + comment_index + 1,
-                value=f'{comment.who} {comment.when} {comment.text}'
+                value=f'{comment.when}\n{comment.who}\n{comment.text}'
             )
             comment_index = comment_index + 1
         for action in candidate.actions:
             worksheet.cell(
                 row=out_row,
                 column=columns_count + comment_index + 1,
-                value=action.action
+                value=f'{action.when}\n{action.who}\n{action.action}'
             )
             comment_index = comment_index + 1
         out_row = out_row + 1
