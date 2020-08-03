@@ -38,15 +38,23 @@ class Candidate:
         if phone is not None and re.fullmatch("\\d+", phone):
             self.phone = phone
         elif phone is not None:
-            self.phone = phone.split(', ', 1)[0]
-            self.phone_comment = phone.split(', ', 1)[1]
+            phone_lines = phone.split(', ', 1)
+            if len(phone_lines) >= 2:
+                self.phone = phone_lines[0]
+                self.phone_comment = phone_lines[1]
+            else:
+                self.phone_comment = phone
         self.email_comment = None
         self.email = None
         if email is not None and re.fullmatch("(^|\s)[-a-z0-9_.]+@([-a-z0-9]+\.)+[a-z]{2,6}(\s|$)", email):
             self.email = email
         elif email is not None:
-            self.email = email.split(', ', 1)[0]
-            self.email_comment = email.split(', ', 1)[1]
+            email_lines = email.split(', ', 1)
+            if len(email_lines) >= 2:
+                self.email = email_lines[0]
+                self.email_comment = email_lines[1]
+            else:
+                self.email_comment = email
         else:
             self.email = email
             self.email_comment = 'нет email'
