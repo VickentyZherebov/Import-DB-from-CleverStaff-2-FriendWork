@@ -34,8 +34,7 @@ _columns = [
     ExportColumn("Телефон", lambda candidate: candidate.phone),
     ExportColumn("Зарплата", lambda candidate: candidate.salary),
     ExportColumn("Комментарий - Email", lambda candidate: candidate.email_comment),
-    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment),
-    ExportColumn("Комментарий - Linkedin", lambda candidate: candidate.linkedin_comment),
+    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment)
 ]
 
 
@@ -91,3 +90,4 @@ def count_max_comments(candidates: Dict[str, Candidate]) -> int:
         if max_comments < candidate_comments:
             max_comments = candidate_comments
     return max_comments
+

@@ -75,7 +75,19 @@ class Candidate:
         self.work_experience = work_experience
         self.salary = salary
         self.currency = currency
-        self.language = language
+        if language is not None:
+            language_lines = language.split(', ', -1)
+            count = 0
+            for i in language:
+                if i == ",":
+                    count = count + 1
+            if count == 1:
+                language_name = language.split(' ', 1)
+                print(language_name[0])
+            if count == 2:
+                language_name = language.split(' ', 2)
+                print(language_name[0])
+                print(language_name[1])
         self.region = region
         self.date_of_adding = self._reformat_date_added(date_of_adding)
         self.local_id = local_id
