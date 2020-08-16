@@ -13,7 +13,7 @@ class Candidate:
         self.desired_position = desired_position
         self.current_position = current_position
         self.current_place = current_place
-        self.birth_date = self._reformat_date(birth_date)
+        self.birth_date = self._reformat_birth_date(birth_date)
         self.sex = sex
 
         head_hunt_states = [
@@ -57,14 +57,19 @@ class Candidate:
                 self.email_comment = email
         else:
             self.email = email
-            self.email_comment = 'нет email'
         self.skype = skype
         self.facebook = facebook
+        self.linkedin_comment = None
         self.linkedin_is_link = None
         self.linkedin = None
-        if linkedin is not None:
+        if linkedin is not None and re.fullmatch("http?s://www.linkedin.com/\S+\s*", linkedin):
             self.linkedin_is_link = "li"
             self.linkedin = linkedin
+        elif linkedin is not None and re.fullmatch("linkedin.com\S+\s*", linkedin):
+            self.linkedin_is_link = "li"
+            self.linkedin = linkedin
+        else:
+            self.linkedin_comment = linkedin
         self.type_of_employment = type_of_employment
         self.field_of_activity = field_of_activity
         self.work_experience = work_experience
@@ -72,14 +77,25 @@ class Candidate:
         self.currency = currency
         self.language = language
         self.region = region
-        self.date_of_adding = self._reformat_date(date_of_adding)
+        self.date_of_adding = self._reformat_date_added(date_of_adding)
         self.local_id = local_id
         self.actions = []
         self.comments = []
 
-    def _reformat_date(self, external_date: [str]) -> [str]:
+    def _reformat_birth_date(self, external_date: [str]) -> [str]:
         if external_date is not None:
             match = re.fullmatch("(\\d{4})-(\\d{2})-(\\d{2})", external_date)
+            if match:
+                year = match.group(1)
+                month = match.group(2)
+                day = match.group(3)
+                return f'{day}.{month}.{year}'
+
+        return None
+
+    def _reformat_date_added(self, external_date: [str]) -> [str]:
+        if external_date is not None:
+            match = re.fullmatch("(\\d{4})-(\\d{2})-(\\d{2}) (\\d{2}):(\\d{2})", external_date)
             if match:
                 year = match.group(1)
                 month = match.group(2)

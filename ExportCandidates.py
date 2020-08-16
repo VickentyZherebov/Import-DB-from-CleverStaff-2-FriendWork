@@ -1,8 +1,6 @@
 from typing import Dict, Callable
-
 from openpyxl import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
-
 from Candidate import Candidate
 
 
@@ -36,7 +34,8 @@ _columns = [
     ExportColumn("Телефон", lambda candidate: candidate.phone),
     ExportColumn("Зарплата", lambda candidate: candidate.salary),
     ExportColumn("Комментарий - Email", lambda candidate: candidate.email_comment),
-    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment)
+    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment),
+    ExportColumn("Комментарий - Linkedin", lambda candidate: candidate.linkedin_comment),
 ]
 
 
