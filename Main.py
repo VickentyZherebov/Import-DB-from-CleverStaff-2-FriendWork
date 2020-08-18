@@ -1,5 +1,6 @@
 from openpyxl import load_workbook, Workbook
 from openpyxl.writer.excel import save_workbook
+
 from ExportCandidates import export_candidates
 from LoadCandidates import load_candidates, load_history, load_comments
 

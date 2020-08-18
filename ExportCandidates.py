@@ -1,6 +1,8 @@
 from typing import Dict, Callable
+
 from openpyxl import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
+
 from Candidate import Candidate
 
 
@@ -80,6 +82,8 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
                 value=f'{action.when}\n{action.who}\n{action.action}'
             )
             comment_index = comment_index + 1
+        for language in candidate.languages:
+            print(f'{language.language.pretty_name()} - {language.level.pretty_name()}')
         out_row = out_row + 1
 
 
@@ -90,4 +94,3 @@ def count_max_comments(candidates: Dict[str, Candidate]) -> int:
         if max_comments < candidate_comments:
             max_comments = candidate_comments
     return max_comments
-
