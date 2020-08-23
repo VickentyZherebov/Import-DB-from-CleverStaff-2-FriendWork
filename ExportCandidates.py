@@ -68,7 +68,7 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
         worksheet.cell(
             row=1,
             column=columns_count + max_comments + column_index + 1,
-            value=Language.ARABIC.pretty_name()
+            value=Language(column_index + 1).name.lower().capitalize()
         )
 
     out_row = 2
@@ -96,11 +96,12 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
             )
             comment_index = comment_index + 1
         for language in candidate.languages:
-            worksheet.cell(
-                row=out_row,
-                column=columns_count + max_comments + column_index + 1,
-                value=f'{language.language.ARABIC.pretty_name()} - {language.level.pretty_name()}'
-            )
+            for column_index in range(0, language_count):
+                worksheet.cell(
+                    row=out_row,
+                    column=columns_count + max_comments + column_index + 1,
+                    value=language.level.pretty_name()
+                )
             print(f'{language.language.pretty_name()} - {language.level.pretty_name()}')
             comment_index = comment_index + 1
         out_row = out_row + 1
