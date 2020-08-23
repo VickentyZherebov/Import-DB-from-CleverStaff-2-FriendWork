@@ -80,7 +80,6 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
                 value=_columns[column_index].get_value(candidate)
             )
         comment_index = 0
-        column_index = 0
         for comment in candidate.comments:
             worksheet.cell(
                 row=out_row,
