@@ -48,7 +48,7 @@ class Candidate:
                 self.phone_comment = phone
         self.email_comment = None
         self.email = None
-        if email is not None and re.fullmatch("(^|\s)[-a-z0-9_.]+@([-a-z0-9]+\.)+[a-z]{2,6}(\s|$)", email):
+        if email is not None and re.fullmatch("(^|\\s)[-a-z0-9_.]+@([-a-z0-9]+\\.)+[a-z]{2,6}(\\s|$)", email):
             self.email = email
         elif email is not None:
             email_lines = email.split(', ', 1)
@@ -64,10 +64,10 @@ class Candidate:
         self.linkedin_comment = None
         self.linkedin_is_link = None
         self.linkedin = None
-        if linkedin is not None and re.fullmatch("http?s://www.linkedin.com/\S+\s*", linkedin):
+        if linkedin is not None and re.fullmatch("http?s://www.linkedin.com/\\S+\\s*", linkedin):
             self.linkedin_is_link = "li"
             self.linkedin = linkedin
-        elif linkedin is not None and re.fullmatch("linkedin.com\S+\s*", linkedin):
+        elif linkedin is not None and re.fullmatch("linkedin.com\\S+\\s*", linkedin):
             self.linkedin_is_link = "li"
             self.linkedin = linkedin
         else:

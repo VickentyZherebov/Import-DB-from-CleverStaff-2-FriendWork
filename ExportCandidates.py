@@ -5,6 +5,9 @@ from openpyxl.worksheet.worksheet import Worksheet
 
 from Candidate import Candidate
 
+from SpokenLanguage import Language
+from SpokenLanguage import SpokenLanguage
+
 
 class ExportColumn:
     def __init__(self, name: str, get_value: Callable[[Candidate], str]):
@@ -36,7 +39,8 @@ _columns = [
     ExportColumn("Телефон", lambda candidate: candidate.phone),
     ExportColumn("Зарплата", lambda candidate: candidate.salary),
     ExportColumn("Комментарий - Email", lambda candidate: candidate.email_comment),
-    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment)
+    ExportColumn("Комментарий - Phone", lambda candidate: candidate.phone_comment),
+    ExportColumn("Комментарий - LinkedIn", lambda candidate: candidate.linkedin_comment)
 ]
 
 
@@ -45,6 +49,7 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
     max_comments = count_max_comments(candidates)
 
     columns_count = len(_columns)
+    language_count = len(Language)
     for column_index in range(0, columns_count):
         worksheet.cell(
             row=1,
@@ -59,6 +64,13 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
             value="Комментарий"
         )
 
+    for column_index in range(0, language_count):
+        worksheet.cell(
+            row=1,
+            column=columns_count + max_comments + column_index + 1,
+            value=Language.ARABIC.pretty_name()
+        )
+
     out_row = 2
     for local_id, candidate in candidates.items():
         for column_index in range(0, columns_count):
@@ -68,6 +80,7 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
                 value=_columns[column_index].get_value(candidate)
             )
         comment_index = 0
+        column_index = 0
         for comment in candidate.comments:
             worksheet.cell(
                 row=out_row,
@@ -83,7 +96,13 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
             )
             comment_index = comment_index + 1
         for language in candidate.languages:
+            worksheet.cell(
+                row=out_row,
+                column=columns_count + max_comments + column_index + 1,
+                value=f'{language.language.ARABIC.pretty_name()} - {language.level.pretty_name()}'
+            )
             print(f'{language.language.pretty_name()} - {language.level.pretty_name()}')
+            comment_index = comment_index + 1
         out_row = out_row + 1
 
 

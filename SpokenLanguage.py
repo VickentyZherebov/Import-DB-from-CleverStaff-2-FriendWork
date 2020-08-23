@@ -59,7 +59,6 @@ class Language(Enum):
     YAKUT = auto()
     PERSIAN = auto()
     UNKNOWN = auto()
-
     def pretty_name(self) -> str:
         return self.name.lower().capitalize()
 
