@@ -6,7 +6,6 @@ from openpyxl.worksheet.worksheet import Worksheet
 from Candidate import Candidate
 
 from SpokenLanguage import Language
-from SpokenLanguage import SpokenLanguage
 
 
 class ExportColumn:
@@ -94,14 +93,15 @@ def export_candidates(workbook: Workbook, candidates: Dict[str, Candidate]):
                 value=f'{action.when}\n{action.who}\n{action.action}'
             )
             comment_index = comment_index + 1
-        for language in candidate.languages:
-            for column_index in range(0, language_count):
+        comment_index = max_comments
+        for language in list(Language):
+            language_level = candidate.languages.get(language)
+            if language_level is not None:
                 worksheet.cell(
                     row=out_row,
-                    column=columns_count + max_comments + column_index + 1,
-                    value=language.level.pretty_name()
+                    column=columns_count + comment_index + 1,
+                    value=language_level.pretty_name()
                 )
-            print(f'{language.language.pretty_name()} - {language.level.pretty_name()}')
             comment_index = comment_index + 1
         out_row = out_row + 1
 

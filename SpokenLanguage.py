@@ -1,6 +1,6 @@
 import re
 from enum import Enum, auto
-from typing import List
+from typing import List, Dict
 
 
 class LanguageLevel(Enum):
@@ -59,28 +59,19 @@ class Language(Enum):
     YAKUT = auto()
     PERSIAN = auto()
     UNKNOWN = auto()
+
     def pretty_name(self) -> object:
         return self.name.lower().capitalize()
 
 
-class SpokenLanguage:
-    def __init__(self, language: Language, level: LanguageLevel):
-        self.language = language
-        self.level = level
-
-    def __repr__(self) -> str:
-        return f'{self.language}:{self.level}'
-
-
-def parse_language(language_str: str) -> List[SpokenLanguage]:
-    if not language_str:
-        return []
-    languages = language_str.split(', ')
-    result = []
-    for language in languages:
-        match = re.fullmatch("(\\S+)\\s+\\((\\S+)\\)", language)
-        if match:
-            result.append(SpokenLanguage(_parse_language_name(match.group(1)), _parse_language_level(match.group(2))))
+def parse_language(language_str: str) -> Dict[Language, LanguageLevel]:
+    result = {}
+    if language_str:
+        languages = language_str.split(', ')
+        for language in languages:
+            match = re.fullmatch("(\\S+)\\s+\\((\\S+)\\)", language)
+            if match:
+                result[_parse_language_name(match.group(1))] = _parse_language_level(match.group(2))
     return result
 
 
